@@ -1,1 +1,1 @@
-# vehicle-insurance-end-to-end-ml
+# Vehicle-Insurance-End-to-End-ML
