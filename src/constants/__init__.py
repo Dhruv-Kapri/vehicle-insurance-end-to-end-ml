@@ -7,6 +7,7 @@ DATABASE_NAME = "vehicle_insurance"
 COLLECTION_NAME = "insurance_data"
 
 
+# General
 PIPELINE_NAME: str = ""
 ARTIFACT_DIR: str = "artifact"
 
@@ -14,9 +15,16 @@ FILE_NAME: str = "data.csv"
 TRAIN_FILE_NAME: str = "train.csv"
 TEST_FILE_NAME: str = "test.csv"
 
-# General
 TARGET_COLUMN = "Response"
 CURRENT_YEAR = date.today().year
+MODEL_FILE_NAME: str = "model.pkl"
+
+
+# AWS
+AWS_ACCESS_KEY_ID_ENV_KEY = "AWS_ACCESS_KEY_ID"
+AWS_SECRET_ACCESS_KEY_ENV_KEY = "AWS_SECRET_ACCESS_KEY"
+REGION_NAME = "us-east-1"
+MODEL_BUCKET_NAME = "vehicle-insurance-s3-bucket"
 
 
 """
@@ -45,17 +53,30 @@ DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR: str = "transformed"
 DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR: str = "transformed_object"
 PREPROCSSING_OBJECT_FILE_NAME: str = "preprocessing.pkl"
 
+
 """
 MODEL TRAINER related constant start with MODEL_TRAINER var name
 """
 MODEL_TRAINER_DIR_NAME: str = "model_trainer"
 MODEL_TRAINER_TRAINED_MODEL_DIR: str = "trained_model"
-MODEL_FILE_NAME: str = "model.pkl"
 MODEL_TRAINER_EXPECTED_SCORE: float = 0.6
 MODEL_TRAINER_MODEL_CONFIG_FILE_PATH: str = os.path.join("config", "model.yaml")
-MODEL_TRAINER_N_ESTIMATORS: int = 200
+# MODEL_TRAINER_N_ESTIMATORS: int = 20  # First run
+MODEL_TRAINER_N_ESTIMATORS: int = 200  # Second run
 MODEL_TRAINER_MIN_SAMPLES_SPLIT: int = 7
 MODEL_TRAINER_MIN_SAMPLES_LEAF: int = 6
 MIN_SAMPLES_SPLIT_MAX_DEPTH: int = 10
 MIN_SAMPLES_SPLIT_CRITERION: str = "entropy"
 MIN_SAMPLES_SPLIT_RANDOM_STATE: int = 101
+
+
+"""
+MODEL Evaluation related constants
+"""
+MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02
+
+
+"""
+MODEL Pusher related constants
+"""
+MODEL_PUSHER_S3_KEY = "model-registry"

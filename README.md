@@ -64,11 +64,19 @@ Vehicle-Insurance-End-to-End-ML
   - Perform model fitting with configurable hyperparameters
   - Checks model accuracy across a predefined threshold
   - Save trained model artifacts for downstream evaluation & deployment
+- **Model Evaluation**
+  - Compares newly trained model against production model (if exists)
+  - Computes F1-score on holdout test dataset
+  - Accepts model only if performance improves
+  - Generates model comparison artifact
+  - Ensures safe model version promotion
+- **Model Pusher** (AWS S3)
+  - Uploads accepted model to AWS S3 bucket
+  - Maintains production model path
+  - Enables model version control via cloud storage
 
 ### Upcoming
 
-- **Model Evaluation**
-- **Model Pusher** (AWS S3)
 - **Prediction Pipeline**
 - **CI/CD** with GitHub Actions
 - **Deployment** on AWS EC2
@@ -172,6 +180,40 @@ artifact/<timestamp>/model_trainer/trained_model
 └── model.pkl
 ```
 
+### 5. Model Evaluation Workflow
+
+The **Model Evaluation component** is responsible for validating whether the newly trained model should replace the current production model.
+
+#### Steps:
+
+1. Loads holdout **test dataset**
+2. Applies identical preprocessing logic used during training
+3. Loads newly trained model artifact
+4. Fetches production model from **AWS S3** (if available)
+5. Computes **F1-score** for:
+   - Newly trained model
+   - Production model
+6. Compares performance difference
+7. Accepts model only if performance improves
+
+### 6. Model Pusher Workflow
+
+The **Model Pusher component** is responsible for promoting the accepted model to production by uploading it to AWS S3.
+
+#### Steps:
+
+1. Checks if model is approved by Model Evaluation stage
+2. Uploads trained model to configured **S3 bucket**
+3. Overwrites or versions production model path
+4. Generates model pusher artifact
+
+#### Artifacts generated:
+
+```text
+aws/Amazon S3/Buckets/vehicle-insurance-s3-bucket
+└── model.pkl
+```
+
 ---
 
 ## Environment Variables
@@ -186,12 +228,16 @@ Or Create a `.env` file:
 
 ```env
 MONGODB_CONNECTION_URL=mongodb+srv://<username>:<password>@<cluster-url>
+AWS_ACCESS_KEY_ID=AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY=AWS_SECRET_ACCESS_KEY
 ```
 
 ### Option 2: Export directly (Linux / macOS)
 
 ```bash
 export MONGODB_CONNECTION_URL="mongodb+srv://<username>:<password>@<cluster-url>"
+export AWS_ACCESS_KEY_ID="AWS_ACCESS_KEY_ID"
+export AWS_SECRET_ACCESS_KEY="AWS_SECRET_ACCESS_KEY"
 ```
 
 ---
