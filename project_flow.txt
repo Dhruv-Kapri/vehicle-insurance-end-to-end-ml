@@ -136,6 +136,6 @@
 30. CI-CD pipeline will be triggered at next commit and push.
 31. Now we need to activate the 5000 port of our EC2 instance:
       * Go to the instance > Security > Go to Security Groups > Edit inbound rules > add rule
-        > type: Custom TCP > Port range: 5080 > 0.0.0.0/0 > Save rules
-32. Now paste the public ip address on the address bar +:5080 and your app will be launched.
+        > type: Custom TCP > Port range: 5000 > 0.0.0.0/0 > Save rules
+32. Now paste the public ip address on the address bar +:5000 and your app will be launched.
 33. You can also do model training on /training route
