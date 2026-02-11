@@ -51,6 +51,9 @@ list_of_files = [
     "backend/app.py",
     "backend/demo.py",
     #
+    "frontend/static/style.css",
+    "frontend/templates/vehicledata.html",
+    #
     "notebook/unititled.ipynb",
     #
     "requirements.txt",

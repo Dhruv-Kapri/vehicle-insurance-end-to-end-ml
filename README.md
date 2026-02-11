@@ -12,9 +12,14 @@ This project follows an **industry-aligned MLOps workflow** with **modular**, **
 Vehicle-Insurance-End-to-End-ML
 ├── artifact/                     # Generated artifacts (ignored in git)
 ├── backend/                      # FastAPI/Flask app entry points
+│   ├── app.py                    # FastAPI entrypoint
+│   ├── config.py                 # Path configuration
+│   ├── forms/                    # Form parsing logic
+│   ├── routes/                   # Train & Predict routes
+│   └── services/                 # Prediction service layer
 ├── config/                       # YAML configs (schema, model)
-├── frontend/                     # UI (to be added)
-├── logs/                         # Application logs
+├── frontend/                     # UI
+├── logs/                         # Application logs (ignored in git)
 ├── notebook/                     # EDA & experimentation notebooks
 ├── src/                          # Core source code
 │   ├── cloud_storage/            # AWS S3 integration
@@ -74,10 +79,13 @@ Vehicle-Insurance-End-to-End-ML
   - Uploads accepted model to AWS S3 bucket
   - Maintains production model path
   - Enables model version control via cloud storage
+- **Prediction Pipeline**
+  - Loads model from S3
+  - Ensures feature alignment
+  - Returns prediction result
 
 ### Upcoming
 
-- **Prediction Pipeline**
 - **CI/CD** with GitHub Actions
 - **Deployment** on AWS EC2
 
@@ -214,6 +222,39 @@ aws/Amazon S3/Buckets/vehicle-insurance-s3-bucket
 └── model.pkl
 ```
 
+### 7. Prediction & Local Deployment Workflow
+
+The project now supports **local model inference using FastAPI**. The backend follows a layered architecture:
+
+#### Backend Layers
+
+1. **Routes Layer**
+   - `train.py` → triggers training pipeline
+   - `predict.py` → handles form submission
+2. **Form Layer**
+   - Parses and typecasts HTML form inputs
+   - Ensures numeric conversion before inference
+3. **Service Layer**
+   - Calls Prediction Pipeline
+4. **Prediction Pipeline**
+   - Loads model from S3
+   - Ensures feature alignment
+   - Returns prediction result
+
+---
+
+### Important: Feature Consistency Fix
+
+Since `id` column was removed during training but exists in preprocessing expectations, the backend dynamically injects it during inference:
+
+```python
+# src/pipeline/prediction_pipeline.py
+
+def predict(self, dataframe):
+    if "id" not in dataframe.columns:
+        dataframe["id"] = 0
+```
+
 ---
 
 ## Environment Variables
@@ -242,19 +283,34 @@ export AWS_SECRET_ACCESS_KEY="AWS_SECRET_ACCESS_KEY"
 
 ---
 
-## How to Run (Current Stage)
+## How to Run Locally
+
+### 1. Create Virtual Environment
 
 ```bash
-# Create virtual environment
 python3 -m venv .venv
 source .venv/bin/activate
+```
 
-# Install dependencies
+### 2. Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
-# Run data ingestion
+### 3. Train Model (Optional if model already exists in S3)
+
+```bash
 python backend/demo.py
 ```
+
+### 4. Run FastAPI Server
+
+```bash
+python backend/app.py
+```
+
+> Application will be available at: [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
 
 ---
 
@@ -263,8 +319,8 @@ python backend/demo.py
 - **Language:** Python `3.12`
 - **ML:** `Scikit-learn`, `Pandas`, `NumPy`
 - **Database:** MongoDB Atlas
+- **Backend:** FastAPI
 - **MLOps:** Docker, AWS S3, GitHub Actions _(planned)_
-- **Backend:** FastAPI / Flask _(planned)_
 - **Deployment:** AWS EC2 _(planned)_
 
 ---
