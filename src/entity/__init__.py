@@ -15,6 +15,7 @@ from .config_entity import (
     ModelPusherConfig,
     ModelTrainerConfig,
     TrainingPipelineConfig,
+    VehiclePredictorConfig,
 )
 from .estimator import MyModel
 from .s3_estimator import Proj_Estimator
@@ -36,4 +37,5 @@ __all__ = [
     "Proj_Estimator",
     "ModelPusherArtifact",
     "ModelPusherConfig",
+    "VehiclePredictorConfig",
 ]

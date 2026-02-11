@@ -27,6 +27,11 @@ REGION_NAME = "us-east-1"
 MODEL_BUCKET_NAME = "vehicle-insurance-s3-bucket"
 
 
+# App frontend
+APP_HOST = "0.0.0.0"
+APP_PORT = 5000
+
+
 """
 Data Ingestion related constant start with DATA_INGESTION VAR NAME
 """
