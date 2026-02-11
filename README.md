@@ -311,7 +311,7 @@ Steps:
 ### 3. AWS ECR Repository
 
 ![ECR Repo](./docs/images/ecr_repo.png)
-![ECR Docker Image](./docs/images/ecr_doceke_image.png)
+![ECR Docker Image](./docs/images/ecr_docker_image.png)
 
 ### 4. AWS EC2 Instance Running
 
@@ -320,7 +320,8 @@ Steps:
 
 ### 5. Application Running on EC2 Public IP
 
-![Live Application](./docs/images/live_app.png)
+![Live Application 1](./docs/images/live_app_1.png)
+![Live Application 2](./docs/images/live_app_2.png)
 
 ### 6. GitHub Actions Workflow Success
 
