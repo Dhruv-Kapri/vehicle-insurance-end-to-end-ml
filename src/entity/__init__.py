@@ -3,16 +3,21 @@ from .artifact_entity import (
     DataIngestionArtifact,
     DataTransformationArtifact,
     DataValidationArtifact,
+    ModelEvaluationArtifact,
+    ModelPusherArtifact,
     ModelTrainerArtifact,
 )
 from .config_entity import (
     DataIngestionConfig,
     DataTransformationConfig,
     DataValidationConfig,
+    ModelEvaluationConfig,
+    ModelPusherConfig,
     ModelTrainerConfig,
     TrainingPipelineConfig,
 )
 from .estimator import MyModel
+from .s3_estimator import Proj_Estimator
 
 __all__ = [
     "DataIngestionArtifact",
@@ -26,4 +31,9 @@ __all__ = [
     "ModelTrainerArtifact",
     "ModelTrainerConfig",
     "MyModel",
+    "ModelEvaluationArtifact",
+    "ModelEvaluationConfig",
+    "Proj_Estimator",
+    "ModelPusherArtifact",
+    "ModelPusherConfig",
 ]

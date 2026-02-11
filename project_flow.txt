@@ -78,10 +78,10 @@
       * Add code to src.configuration.aws_connection.py file (To work with AWS S3 service)
       * Ensure below info in constants.__init__.py file:
             MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02
-            MODEL_BUCKET_NAME = "my-model-mlopsproj"
+            MODEL_BUCKET_NAME = "vehicle-insurance-s3-bucket"
             MODEL_PUSHER_S3_KEY = "model-registry"
       * Go to S3 service >> Create bucket >> Region: us-east-1 >> General purpose >>
-        Bucket Name: "my-model-mlopsproj" >> uncheck: "Block all public access" and acknowledge >>
+        Bucket Name: "vehicle-insurance-s3-bucket" >> uncheck: "Block all public access" and acknowledge >>
         Hit Create Bucket
       * Now inside "src.aws_storage" code needs to be added for the configurations needed to pull 
         and push model from AWS S3 bucket. 
